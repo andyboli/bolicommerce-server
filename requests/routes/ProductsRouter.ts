@@ -7,7 +7,9 @@ const ProductsRouter = express.Router();
 
 ProductsRouter.get(
   "/",
-  rescue(() => console.log("Bolicommerce server is running"))
+  rescue((_req, res) =>
+    res.status(200).json({ messabe: "The Bolicommerce server is running" })
+  )
 );
 
 ProductsRouter.post("/", rescue(ProductsController.postProducts));
