@@ -1,6 +1,7 @@
 import express, { Express } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import rescue from "express-rescue";
 
 import { DotenvService } from "../services";
 import { ErrorMiddleware } from "./middlewares";
@@ -25,6 +26,15 @@ export const listenExpressApp = (app: Express) => {
 };
 
 export const setExpressRoutes = (app: Express) => {
+  app.use(
+    "/",
+    express.Router().get(
+      "/",
+      rescue((_req, res) =>
+        res.status(200).json({ messabe: "The Bolicommerce server is running" })
+      )
+    )
+  );
   app.use(PRODUCTS_ENDPOINT, ProductsRouter);
 };
 
