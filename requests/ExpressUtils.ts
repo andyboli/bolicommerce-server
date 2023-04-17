@@ -30,7 +30,7 @@ export const setExpressRoutes = (app: Express) => {
     "/",
     express.Router().get(
       "/",
-      rescue((_req, res) =>
+      rescue((_req: Express.Request, res: Express.Response) =>
         res.status(200).json({ messabe: "The Bolicommerce server is running" })
       )
     )
