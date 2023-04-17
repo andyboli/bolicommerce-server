@@ -26,15 +26,6 @@ export const listenExpressApp = (app: Express) => {
 };
 
 export const setExpressRoutes = (app: Express) => {
-  app.use(
-    "/",
-    express.Router().get(
-      "/",
-      rescue((_req: Express.Request, res: Express.Response) =>
-        res.status(200).json({ messabe: "The Bolicommerce server is running" })
-      )
-    )
-  );
   app.use(PRODUCTS_ENDPOINT, ProductsRouter);
 };
 

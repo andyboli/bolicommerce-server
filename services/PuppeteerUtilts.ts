@@ -1,6 +1,6 @@
 import { Page } from "puppeteer";
 
-import { DeepmergeService } from "./";
+import { DeepmergeService, DotenvService } from "./";
 import {
   mapBuscapeProductsCategories,
   mapFreemarketProductsCategories,
@@ -185,24 +185,27 @@ export const getBuscapeProducts = async (
   await gotoBuscapeDomain(page, scrapeParams);
   const buscapePagesChainLoad = [];
   const buscapeFirstPage = 1;
-  const paginationLimit = await getBuscapePaginationLimit(
-    page,
-    buscapeFirstPage
-  );
   // navigate to firstPage
   buscapePagesChainLoad.push(getBuscapeScrapedProducts(page));
-  const buscapePaginationComponentNextPageSelector =
-    ".Paginator_page__50dus.Paginator_fullPage__5DTfi > .Paginator_pageLink__GsWrn";
   // navigate to otherPages
-  for (
-    let navigations = buscapeFirstPage;
-    navigations < paginationLimit;
-    navigations++
-  ) {
-    buscapePagesChainLoad.push(
-      nextPageLoad(page, buscapePaginationComponentNextPageSelector)
+  // due request timeout vercel limitation the pagination should be enabled only in development mode [https://vercel.com/docs/concepts/limits/overview]
+  if (DotenvService.getEnv("NODE_ENV") === "development") {
+    const paginationLimit = await getBuscapePaginationLimit(
+      page,
+      buscapeFirstPage
     );
-    buscapePagesChainLoad.push(getBuscapeScrapedProducts(page));
+    const buscapePaginationComponentNextPageSelector =
+      ".Paginator_page__50dus.Paginator_fullPage__5DTfi > .Paginator_pageLink__GsWrn";
+    for (
+      let navigations = buscapeFirstPage;
+      navigations < paginationLimit;
+      navigations++
+    ) {
+      buscapePagesChainLoad.push(
+        nextPageLoad(page, buscapePaginationComponentNextPageSelector)
+      );
+      buscapePagesChainLoad.push(getBuscapeScrapedProducts(page));
+    }
   }
   const buscapePagesChainLoaded = await Promise.all(buscapePagesChainLoad);
   const buscapeScrapeProducts = buscapePagesChainLoaded.reduce(
@@ -221,25 +224,28 @@ export const getFreemarketProducts = async (
 ) => {
   await gotoFreemarketDomain(page, scrapeParams);
   const freemarketPagesChainLoad = [];
-  const freemarketFirstPage = 1;
-  const paginationLimit = await getFreemarketPaginationLimit(
-    page,
-    freemarketFirstPage
-  );
   // navigate to firstPage
   freemarketPagesChainLoad.push(getFreemarkScrapedProducts(page));
   const freemarketPaginationComponentNextPageSelector =
     ".andes-pagination__link.shops__pagination-link.ui-search-link";
   // navigate to otherPages
-  for (
-    let navigations = freemarketFirstPage;
-    navigations < paginationLimit;
-    navigations++
-  ) {
-    freemarketPagesChainLoad.push(
-      nextPageLoad(page, freemarketPaginationComponentNextPageSelector)
+  // due request timeout vercel limitation the pagination should be enabled only in development mode [https://vercel.com/docs/concepts/limits/overview]
+  if (DotenvService.getEnv("NODE_ENV") === "development") {
+    const freemarketFirstPage = 1;
+    const paginationLimit = await getFreemarketPaginationLimit(
+      page,
+      freemarketFirstPage
     );
-    freemarketPagesChainLoad.push(getFreemarkScrapedProducts(page));
+    for (
+      let navigations = freemarketFirstPage;
+      navigations < paginationLimit;
+      navigations++
+    ) {
+      freemarketPagesChainLoad.push(
+        nextPageLoad(page, freemarketPaginationComponentNextPageSelector)
+      );
+      freemarketPagesChainLoad.push(getFreemarkScrapedProducts(page));
+    }
   }
   const freemarketPagesChainLoaded = await Promise.all(
     freemarketPagesChainLoad

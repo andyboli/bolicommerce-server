@@ -7,7 +7,6 @@ exports.setExpressMiddlewares = exports.setExpressRoutes = exports.listenExpress
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
-const express_rescue_1 = __importDefault(require("express-rescue"));
 const services_1 = require("../services");
 const middlewares_1 = require("./middlewares");
 const routes_1 = require("./routes");
@@ -27,7 +26,6 @@ const listenExpressApp = (app) => {
 };
 exports.listenExpressApp = listenExpressApp;
 const setExpressRoutes = (app) => {
-    app.use("/", express_1.default.Router().get("/", (0, express_rescue_1.default)((_req, res) => res.status(200).json({ messabe: "The Bolicommerce server is running" }))));
     app.use(routes_1.PRODUCTS_ENDPOINT, routes_1.ProductsRouter);
 };
 exports.setExpressRoutes = setExpressRoutes;

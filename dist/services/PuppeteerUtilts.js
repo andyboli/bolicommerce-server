@@ -120,14 +120,17 @@ const getBuscapeProducts = (page, scrapeParams) => __awaiter(void 0, void 0, voi
     yield gotoBuscapeDomain(page, scrapeParams);
     const buscapePagesChainLoad = [];
     const buscapeFirstPage = 1;
-    const paginationLimit = yield getBuscapePaginationLimit(page, buscapeFirstPage);
     // navigate to firstPage
     buscapePagesChainLoad.push(getBuscapeScrapedProducts(page));
-    const buscapePaginationComponentNextPageSelector = ".Paginator_page__50dus.Paginator_fullPage__5DTfi > .Paginator_pageLink__GsWrn";
     // navigate to otherPages
-    for (let navigations = buscapeFirstPage; navigations < paginationLimit; navigations++) {
-        buscapePagesChainLoad.push(nextPageLoad(page, buscapePaginationComponentNextPageSelector));
-        buscapePagesChainLoad.push(getBuscapeScrapedProducts(page));
+    // due request timeout vercel limitation the pagination should be enabled only in development mode [https://vercel.com/docs/concepts/limits/overview]
+    if (_1.DotenvService.getEnv("NODE_ENV") === "development") {
+        const paginationLimit = yield getBuscapePaginationLimit(page, buscapeFirstPage);
+        const buscapePaginationComponentNextPageSelector = ".Paginator_page__50dus.Paginator_fullPage__5DTfi > .Paginator_pageLink__GsWrn";
+        for (let navigations = buscapeFirstPage; navigations < paginationLimit; navigations++) {
+            buscapePagesChainLoad.push(nextPageLoad(page, buscapePaginationComponentNextPageSelector));
+            buscapePagesChainLoad.push(getBuscapeScrapedProducts(page));
+        }
     }
     const buscapePagesChainLoaded = yield Promise.all(buscapePagesChainLoad);
     const buscapeScrapeProducts = buscapePagesChainLoaded.reduce(_1.DeepmergeService.mergePagesFields, {});
@@ -140,15 +143,18 @@ exports.getBuscapeProducts = getBuscapeProducts;
 const getFreemarketProducts = (page, scrapeParams) => __awaiter(void 0, void 0, void 0, function* () {
     yield gotoFreemarketDomain(page, scrapeParams);
     const freemarketPagesChainLoad = [];
-    const freemarketFirstPage = 1;
-    const paginationLimit = yield getFreemarketPaginationLimit(page, freemarketFirstPage);
     // navigate to firstPage
     freemarketPagesChainLoad.push(getFreemarkScrapedProducts(page));
     const freemarketPaginationComponentNextPageSelector = ".andes-pagination__link.shops__pagination-link.ui-search-link";
     // navigate to otherPages
-    for (let navigations = freemarketFirstPage; navigations < paginationLimit; navigations++) {
-        freemarketPagesChainLoad.push(nextPageLoad(page, freemarketPaginationComponentNextPageSelector));
-        freemarketPagesChainLoad.push(getFreemarkScrapedProducts(page));
+    // due request timeout vercel limitation the pagination should be enabled only in development mode [https://vercel.com/docs/concepts/limits/overview]
+    if (_1.DotenvService.getEnv("NODE_ENV") === "development") {
+        const freemarketFirstPage = 1;
+        const paginationLimit = yield getFreemarketPaginationLimit(page, freemarketFirstPage);
+        for (let navigations = freemarketFirstPage; navigations < paginationLimit; navigations++) {
+            freemarketPagesChainLoad.push(nextPageLoad(page, freemarketPaginationComponentNextPageSelector));
+            freemarketPagesChainLoad.push(getFreemarkScrapedProducts(page));
+        }
     }
     const freemarketPagesChainLoaded = yield Promise.all(freemarketPagesChainLoad);
     const freemarketProducts = freemarketPagesChainLoaded.reduce(_1.DeepmergeService.mergePagesFields, {});
