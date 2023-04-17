@@ -69,8 +69,8 @@ export interface PostProductsParams extends ScrapedProductsParams {
 }
 
 export type DomainsProducs = Record<
-  PRODUCT_DOMAINS.BUSCAPE | PRODUCT_DOMAINS.FREEEMARKET,
-  Partial<Product>[] | []
+  Exclude<PRODUCT_DOMAINS, PRODUCT_DOMAINS.ALL>,
+  Product[] | []
 >;
 
 export const mapBuscapeProductsCategories = {
@@ -88,7 +88,7 @@ export const mapFreemarketProductsCategories = {
 export const mapScrapedProducts = (
   scrapedProducts: ScrapedProducts,
   scrapedProductParams: Omit<ScrapedProductParams, "searchValue">
-): Partial<Product[]> =>
+): Product[] =>
   fillProducts(
     filterProducts(createProducts(scrapedProducts)),
     scrapedProductParams

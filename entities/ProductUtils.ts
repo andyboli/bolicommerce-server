@@ -64,15 +64,14 @@ const fillFreemarketProducts = (
   price: product.price ? mapFreemarketPriceField(product.price) : "",
 });
 
-const mapDomainToFillFunction = {
-  [PRODUCT_DOMAINS.BUSCAPE]: fillBuscapeProducts,
-  [PRODUCT_DOMAINS.FREEEMARKET]: fillFreemarketProducts,
-};
-
 export const fillProducts = (
   products: Partial<Product>[],
   scrapedProductParams: Omit<ScrapedProductParams, "searchValue">
 ): Product[] => {
+  const mapDomainToFillFunction = {
+    [PRODUCT_DOMAINS.BUSCAPE]: fillBuscapeProducts,
+    [PRODUCT_DOMAINS.FREEEMARKET]: fillFreemarketProducts,
+  };
   return products.map((product) => ({
     category: scrapedProductParams.category,
     description: product.description || "",
