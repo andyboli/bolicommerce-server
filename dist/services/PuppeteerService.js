@@ -28,7 +28,7 @@ const Product_1 = require("../entities/Product");
 const PuppeteerUtilts_1 = require("./PuppeteerUtilts");
 const scrapeProducts = (_a) => __awaiter(void 0, void 0, void 0, function* () {
     var { domain } = _a, scrapeParams = __rest(_a, ["domain"]);
-    const browser = yield puppeteer_1.default.launch({ headless: true });
+    const browser = yield puppeteer_1.default.launch({ headless: false });
     const page = yield browser.newPage();
     const domainsProducts = {
         [Product_1.PRODUCT_DOMAINS.BUSCAPE]: [],

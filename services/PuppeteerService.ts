@@ -11,7 +11,7 @@ const scrapeProducts = async ({
   domain,
   ...scrapeParams
 }: ScrapedProductsParams) => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
   const domainsProducts: DomainsProducs = {
     [PRODUCT_DOMAINS.BUSCAPE]: [],
