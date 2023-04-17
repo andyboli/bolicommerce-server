@@ -93,3 +93,27 @@ export const mapScrapedProducts = (
     filterProducts(createProducts(scrapedProducts)),
     scrapedProductParams
   );
+
+export const mapDatabaseProducts = (products: Product[]) =>
+  products.reduce(
+    (acc: DomainsProducs, product) => {
+      if (product.domain === PRODUCT_DOMAINS.BUSCAPE)
+        return {
+          ...acc,
+          [PRODUCT_DOMAINS.BUSCAPE]: [...acc[PRODUCT_DOMAINS.BUSCAPE], product],
+        };
+      if (product.domain === PRODUCT_DOMAINS.FREEEMARKET)
+        return {
+          ...acc,
+          [PRODUCT_DOMAINS.FREEEMARKET]: [
+            ...acc[PRODUCT_DOMAINS.FREEEMARKET],
+            product,
+          ],
+        };
+      return acc;
+    },
+    {
+      [PRODUCT_DOMAINS.BUSCAPE]: [],
+      [PRODUCT_DOMAINS.FREEEMARKET]: [],
+    }
+  );
