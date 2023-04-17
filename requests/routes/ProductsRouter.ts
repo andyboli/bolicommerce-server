@@ -1,10 +1,13 @@
 import express from "express";
+import rescue from "express-rescue";
+
+import { ProductsController } from "../../controllers";
 
 const ProductsRouter = express.Router();
 
-ProductsRouter.post("/", () => console.log("list and save products"));
+ProductsRouter.post("/", rescue(ProductsController.postProducts));
 
-ProductsRouter.post("/drop", () => console.log("drop products"));
+ProductsRouter.delete("/", rescue(ProductsController.deleteProducts));
 
 export const PRODUCTS_ENDPOINT = "/products";
 
