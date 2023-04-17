@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "undefined/subscriptions/d2580159-8ada-46eb-b4c3-244bddd1559c/resourceGroups/boliresourcegroup/providers/Microsoft.Web/sites/bolicommerce-server",
+  "appService.deploySubpath": "."
+}

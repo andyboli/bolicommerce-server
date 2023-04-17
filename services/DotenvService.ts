@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 import HapiBoomService from "@hapi/boom";
 
-const { parsed: appEnvs } = dotenv.config();
+dotenv.config();
 
 const getEnv = (envKey: string) => {
-  const envValue = appEnvs && appEnvs[envKey];
+  const envValue = process.env[envKey];
   if (!envValue)
     return HapiBoomService.badImplementation(
       `Environment variable ${envKey} doesn't exist`
