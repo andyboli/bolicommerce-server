@@ -1,1 +1,7 @@
-console.log("Starting application");
+import { ExpressService } from "./requests";
+
+const startApp = () => {
+  ExpressService.startExpressApp();
+};
+
+startApp();
