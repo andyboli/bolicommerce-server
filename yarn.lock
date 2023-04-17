@@ -355,7 +355,7 @@
     "@types/mime" "*"
     "@types/node" "*"
 
-"@types/tedious@*":
+"@types/tedious@*", "@types/tedious@^4.0.9":
   version "4.0.9"
   resolved "https://registry.npmjs.org/@types/tedious/-/tedious-4.0.9.tgz"
   integrity sha512-ipwFvfy9b2m0gjHsIX0D6NAAwGCKokzf5zJqUZHUGt+7uWVlBIy6n2eyMgiKQ8ChLFVxic/zwQUhjLYNzbHDRA==
@@ -2856,7 +2856,7 @@ tedious@^15.0.1:
     punycode "^2.1.0"
     sprintf-js "^1.1.2"
 
-tedious@^16.0.0:
+tedious@16.0.0:
   version "16.0.0"
   resolved "https://registry.npmjs.org/tedious/-/tedious-16.0.0.tgz"
   integrity sha512-8Obq4NoAgjr4iTihRU8tGFX6FbUQc5fbn5vsTbScQQhLsi7nrY7h2rPBE+JS8wjLLKYMmZBt9KfpTFqDdLf93w==
