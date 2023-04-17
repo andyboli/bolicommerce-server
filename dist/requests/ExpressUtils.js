@@ -16,7 +16,7 @@ const configExpressApp = (app) => {
     app.use(express_1.default.json());
     app.use(body_parser_1.default.urlencoded({ extended: false }));
     app.use(body_parser_1.default.json());
-    app.use((0, cors_1.default)({ origin: services_1.DotenvService.getEnv("CLIENT_DOMAIN") }));
+    app.use((0, cors_1.default)());
 };
 exports.configExpressApp = configExpressApp;
 const listenExpressApp = (app) => {

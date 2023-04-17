@@ -13,7 +13,7 @@ export const configExpressApp = (app: Express) => {
   app.use(express.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
-  app.use(cors({ origin: DotenvService.getEnv("CLIENT_DOMAIN") as string }));
+  app.use(cors());
 };
 
 export const listenExpressApp = (app: Express) => {
