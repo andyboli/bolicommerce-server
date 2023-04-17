@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 
 import { PostProductsParams } from "../entities/Product";
+import { PuppeteerService } from "../services";
 
 const deleteProducts: RequestHandler<
   Express.Request,
@@ -16,7 +17,10 @@ const postProducts: RequestHandler<Express.Request, Express.Response> = async (
   const {
     data: { stored, ...scrapeDomainsParams },
   } = request.body as { data: PostProductsParams };
-  console.log("postProducts", postProducts);
+  if (!stored) {
+    const products = await PuppeteerService.scrapeProducts(scrapeDomainsParams);
+    return response.status(200).json({ products, stored: false });
+  }
 };
 
 const ProductsController = {
